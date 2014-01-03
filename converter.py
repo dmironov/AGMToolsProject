@@ -3,7 +3,7 @@
 #
 #   This is a Python script that converts netlist AGM models to S3BDD.
 #    
-#   Files: agmlibrary.py, converter.exe, converter.py
+#   Files: agmlibrary.py, converter.py, converter.exe
 #   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts: mironov@smail.ee
 #
