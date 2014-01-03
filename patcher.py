@@ -5,7 +5,7 @@
 #   successor values.
 #    
 #   Files: agmlibrary.py, patcher.py 
-#   Copyrights: Dmitri Mironov, 2013
+#   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts: mironov@smail.ee
 #
 #------------------------------------------------------------------------------#
