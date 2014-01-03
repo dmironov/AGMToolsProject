@@ -5,7 +5,7 @@
 #   simulates it and generates Delay Fault Table and SAF Fault Table
 #   for the test pairs.
 #   
-#   Files:      agmlibrary.py, npsimul.exe, test_generator.py
+#   Files:      agmlibrary.py, test_generator.py, npsimul.exe
 #   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts:   mironov@smail.ee
 #
