@@ -5,7 +5,7 @@
 #   invert_value: apply inversion rule, if the node value is inverted
 #   calculate_additional_inputs: calculates value of additional input of S3BDD
 #
-#   Copyrights: Dmitri Mironov, 2013
+#   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts:   mironov@smail.ee
 #
 #------------------------------------------------------------------------------------------------------------------#
