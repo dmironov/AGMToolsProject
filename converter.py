@@ -3,7 +3,7 @@
 #
 #   This is a Python script that converts netlist AGM models to S3BDD.
 #    
-#   Files: agmlibrary.py, converter.exe, patcher.py
+#   Files: agmlibrary.py, converter.exe, converter.py
 #   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts: mironov@smail.ee
 #
@@ -86,7 +86,7 @@ def run_converter (filename):
     temp_data = open(filename+"_opt.agm", "rt")
     return temp_data
 
-#Here the patcher code begins
+#Here the converter code begins
 
 stat_array = []         #0 - Nods, 1 - Vars, 2 - Grps, 3 - Inps, 4 - Cons, 5 - Outs
 len_index_array = []    #len indexes of the agm file
