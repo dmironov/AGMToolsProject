@@ -37,7 +37,8 @@ def close_files (in_data, output_data, temp_data):
     in_data.close()
     output_data.close()
     temp_data.close()
-    os.remove("temp")
+    try: os.remove("temp")
+    except OSError: pass
 
 
 def save_element (reverse_flag, each_line, string_before, string_after):

@@ -1,10 +1,9 @@
 #------------------------------------------------------------------------------#
-#   AGM S3BDD PATCHER 2013
+#   AGM S3BDD CONVERTER 2013
 #
-#   This is a Python script that patches S3BDD models with the correct
-#   successor values.
+#   This is a Python script that converts netlist AGM models to S3BDD.
 #    
-#   Files: agmlibrary.py, patcher.py 
+#   Files: agmlibrary.py, converter.exe, patcher.py
 #   Copyrights: Dmitri Mironov, 2013-2014
 #   Contacts: mironov@smail.ee
 #
@@ -13,6 +12,7 @@
 import agmlibrary
 import time
 import re
+import os
 import random
     
 def replace_successors (in_data, output_data):
@@ -77,6 +77,15 @@ def replace_successors (in_data, output_data):
     in_data.seek(0)
     output_data.seek(0)
 
+def run_converter (filename):
+
+    #running converter.exe application
+    try: os.system("external_tools\\converter.exe " +filename+".agm")
+    except: pass
+
+    temp_data = open(filename+"_opt.agm", "rt")
+    return temp_data
+
 #Here the patcher code begins
 
 stat_array = []         #0 - Nods, 1 - Vars, 2 - Grps, 3 - Inps, 4 - Cons, 5 - Outs
@@ -90,19 +99,19 @@ while True:
         try:
 
             filename = input("Please enter agm input file name:")
-            in_data = open(filename, "rt")                              #open source file to read from
+            in_data = open(filename+".agm", "rt")                              #open source file to read from
 
-            out_filename = input("Please enter agm output file name:") 
-            output_data = open(out_filename, "w+")                      #open output file to write to
-            temp_data = open("temp", "w+")                              #temporary data (optional)
+            out_filename = input("Please enter agm output file name:")
+            output_data = open(out_filename+".agm", "w+")                      #open output file to write to
 
             print("Processing... Please wait!")
             start_time = time.time()
+            temp_data = run_converter(filename)
             
-            (stat_array, len_index_array, beg_index_array) = agmlibrary.gather_statistics(in_data, stat_array, len_index_array, beg_index_array)
+            (stat_array, len_index_array, beg_index_array) = agmlibrary.gather_statistics(temp_data, stat_array, len_index_array, beg_index_array)
             print("AGM statistics gathered...OK!")
-                       
-            replace_successors(in_data, output_data)
+
+            replace_successors(temp_data, output_data)
             print("Successors updated...OK!")
 
             print("The file", out_filename, "has been created successfully!")
@@ -110,6 +119,7 @@ while True:
             prun = input("Continue (y/n)?")
 
             agmlibrary.close_files(in_data, output_data, temp_data)
+            os.remove(filename+"_opt.agm")
                 
         except IOError:
             print("File does not exist!")
