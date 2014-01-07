@@ -266,7 +266,7 @@ def run_npsimul(filename, output_data):
     new_tst_data.close()
 
     #running npsimul.exe application
-    try: os.system("external_tools\\npsimul.exe" +filename)
+    try: os.system("external_tools\\npsimul.exe " +filename)
     except: pass
     
     #copying new test table to output log
