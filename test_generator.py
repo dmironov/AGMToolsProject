@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------#
-#   DELAY FAULT TEST GENERATOR 2013
+#   DELAY FAULT TEST GENERATOR
 #
 #   This is a Python script that generates extended test table,
 #   simulates it and generates Delay Fault Table and SAF Fault Table
@@ -83,8 +83,10 @@ def collect_data(in_data, enable_logging):
     del table[0:len(table)]
     del faults[0:len(faults)]
 
+    global coverage
     vectors = 0                            #nr of test vectors in the tst files
     vectors_tmp = 0                        #same as previous, but for local index purpose
+    coverage = ""
     
     for each_line in in_data:
         #reading nr of vectors in tst
@@ -115,7 +117,14 @@ def collect_data(in_data, enable_logging):
             for each_line in in_data:
                 if each_line == "\n": continue
                 faults.append(list(each_line))
-                break 
+                break
+
+        if not each_line.find(".COVERAGE") == -1:
+            #saving faults to new list
+            for each_line in in_data:
+                if each_line == "\n": continue
+                coverage = each_line
+                break
     
     #remove "\n" symbol at the end of each list        
     for each_element in patterns:
@@ -125,7 +134,7 @@ def collect_data(in_data, enable_logging):
         if isinstance(each_element, list): each_element.pop()          
         
     for each_element in faults:
-        if isinstance(each_element, list): each_element.pop()   
+        if isinstance(each_element, list): each_element.pop()
         
 
 def build_ext_table(in_data, tst_filename, output_data, enable_logging):
@@ -246,6 +255,8 @@ def print_sim_result(result):
 def run_npsimul(filename, output_data):
 #function runs the npsimul application
 
+    global coverage
+
     #creating new tst file for npsimul simulator
     new_tst_data = open(filename+".tst", "w")
 
@@ -280,18 +291,23 @@ def run_npsimul(filename, output_data):
     if disable_statistics: print_sim_result(patterns)     
     
     if disable_statistics: output_data.write("\nExtended fault simulation table:\n")
-    if disable_statistics: output_data.write("Indexes for inputs:"+str(int_global_index)+"\n")
+    if disable_statistics: output_data.write("Indexes for inputs: "+str(int_global_index)+"\n")
     if disable_statistics: output_data.write("----------------------------\n")
     
     #TBD - this operation is failing!!!
     if disable_statistics: print_sim_result(table)
     
+    output_data.write("COVERAGE: " +coverage+ "\n")
     new_tst_data.close()
     
 def delay_fault_table(filename, output_data, enable_logging):
 #function generates delay fault table
     
     delay_faults = list()
+    delay_coverage = list()
+
+    for i in range(len(patterns[0])):
+        delay_coverage.append(False)
     
     if enable_logging: print(main_vector_indexes, add_vector_nr)
     
@@ -311,21 +327,27 @@ def delay_fault_table(filename, output_data, enable_logging):
                             if enable_logging: print(each_bit, patterns[patterns.index(each_element) + i][n])
                             if (each_bit == "0" and patterns[patterns.index(each_element) + i][n] == "1"):
                                 delay_faults.append("D")
+                                delay_coverage[n] = True
 
                             elif (each_bit == "1" and patterns[patterns.index(each_element) + i][n] == "0"):
                                 delay_faults.append("D")
+                                delay_coverage[n] = True
                                 
                             elif (each_bit == "l" and patterns[patterns.index(each_element) + i][n] == "h"):
                                 delay_faults.append("D")
+                                delay_coverage[n] = True
                             
                             elif (each_bit == "h" and patterns[patterns.index(each_element) + i][n] == "l"):
                                 delay_faults.append("D")
+                                delay_coverage[n] = True
                             
                             elif (each_bit == "L" and patterns[patterns.index(each_element) + i][n] == "H"):
                                 delay_faults.append("D")
+                                delay_coverage[n] = True
                             
                             elif (each_bit == "H" and patterns[patterns.index(each_element) + i][n] == "L"):
-                                delay_faults.append("D")                            
+                                delay_faults.append("D")
+                                delay_coverage[n] = True
 
                             else: delay_faults.append("X")
                             n += 1
@@ -338,7 +360,13 @@ def delay_fault_table(filename, output_data, enable_logging):
 
                 j += 1
                 if j == len(add_vector_nr): break
-                
+
+    tested_delay_faults = 0
+    for each_fault in delay_coverage:
+        if each_fault:
+            tested_delay_faults += 1
+
+    output_data.write("\nCOVERAGE: " +str(len(delay_coverage))+ " / " +str(tested_delay_faults)+ " = " +str(100 / (len(delay_coverage) / tested_delay_faults))+ " %\n")
 
 stat_array = []         #0 - Nods, 1 - Vars, 2 - Grps, 3 - Inps, 4 - Cons, 5 - Outs
 patterns = []           #list of test patterns from input tst
