@@ -66,7 +66,7 @@ def replace_successors (in_data, output_data):
                     else:
                         right_successor = 0
                     
-                new_line = re.sub(" \d{1,} \d{1,}"," " + str(down_successor) + " " + str(right_successor), each_line)
+                new_line = re.sub(r" \d{1,} \d{1,}"," " + str(down_successor) + " " + str(right_successor), each_line)
                 min_successor_index += 1
 
             output_data.write(new_line)
