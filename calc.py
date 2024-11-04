@@ -4,8 +4,8 @@
 #   This is a Python script that calculates minimum number of nodes in S3BDD.
 #    
 #   Files: calc.py 
-#   Copyrights: Dmitri Mironov, 2013-2014
-#   Contacts: mironov@smail.ee
+#   Copyrights: Dmitri Mironov, 2013-2024
+#   Contacts: dmm.mironov@gmail.com
 #
 #------------------------------------------------------------------------------#
 

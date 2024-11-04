@@ -6,8 +6,8 @@
 #   save_element: finds the target element between two strings and returns it as a string or integer
 #   gather_statistics: gathers all statistics about the agm file
 #
-#   Copyrights: Dmitri Mironov, 2013-2014
-#   Contacts:   mironov@smail.ee
+#   Copyrights: Dmitri Mironov, 2013-2024
+#   Contacts:   dmm.mironov@gmail.com
 #
 #--------------------------------------------------------------------------------------------------#
 

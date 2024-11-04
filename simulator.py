@@ -5,8 +5,8 @@
 #   This does not work with gate-level and SSBDD models.
 #   
 #   Files:      agmlibrary.py, simlibrary.py, simulator.py 
-#   Copyrights: Dmitri Mironov, 2013-2014
-#   Contacts:   mironov@smail.ee
+#   Copyrights: Dmitri Mironov, 2013-2024
+#   Contacts:   dmm.mironov@gmail.com
 #
 #------------------------------------------------------------------------------#
 

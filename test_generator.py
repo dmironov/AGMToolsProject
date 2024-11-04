@@ -6,8 +6,8 @@
 #   for the test pairs.
 #   
 #   Files:      agmlibrary.py, test_generator.py, npsimul.exe
-#   Copyrights: Dmitri Mironov, 2013-2014
-#   Contacts:   mironov@smail.ee
+#   Copyrights: Dmitri Mironov, 2013-2024
+#   Contacts:   dmm.mironov@gmail.com
 #
 #------------------------------------------------------------------------------#
 
